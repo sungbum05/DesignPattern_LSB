@@ -2,17 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+public class ObjectPool<T> : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    QueueLSB<T> Pool = new QueueLSB<T>(100);
+
+    public void Initialize(int Count)
     {
-        
+        for (int i = 0; i < Count; i++)
+        {
+            CreateNewObj();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CreateNewObj()
     {
-        
+        Instantiate(T)
+    }
+
+    public T GetObj()
+    {
+
+    }
+
+    public void ReturnObj(T Obj)
+    {
+
     }
 }
