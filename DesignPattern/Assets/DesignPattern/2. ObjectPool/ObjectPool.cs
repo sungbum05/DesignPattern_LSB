@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool<T> : MonoBehaviour
+public class ObjectPool : MonoBehaviour
 {
-    QueueLSB<T> Pool = new QueueLSB<T>(100);
+    QueueLSB<GameObject> Pool = new QueueLSB<GameObject>(100);
 
     public void Initialize(int Count)
     {
@@ -16,15 +16,15 @@ public class ObjectPool<T> : MonoBehaviour
 
     public void CreateNewObj()
     {
-        Instantiate(T)
+
     }
 
-    public T GetObj()
+    public GameObject GetObj()
     {
-
+        return default(GameObject);
     }
 
-    public void ReturnObj(T Obj)
+    public void ReturnObj(GameObject Obj)
     {
 
     }

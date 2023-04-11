@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public class QueueLSB<T> : MonoBehaviour
+public class QueueLSB<T>
 {
     const int Bottom = -1;
 

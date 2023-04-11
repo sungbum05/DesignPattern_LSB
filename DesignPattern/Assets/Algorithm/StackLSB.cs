@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StackLSB<T> : MonoBehaviour
+public class StackLSB<T>
 {
     public int Count = 0;
     public T[] Array;
