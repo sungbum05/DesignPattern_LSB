@@ -64,8 +64,8 @@ public class QueueLSB<T>
         Debug.Log($"IsEmpty: {(CurFloor < 0 ? "True" : "False")}\n");
     }
 
-    public void Size()
+    public int Lentgh()
     {
-        Debug.Log($"{CurFloor + 1}\n");
+        return CurFloor + 1;
     }
 }

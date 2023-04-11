@@ -25,12 +25,12 @@ public class Test : MonoBehaviour
         QueueLSB.Push(1);
         QueueLSB.Push(2);
 
-        QueueLSB.Size();
+        Debug.Log(QueueLSB.Lentgh());
 
         Debug.Log($"POP: {QueueLSB.Pop()}");
         Debug.Log($"POP: {QueueLSB.Pop()}");
         Debug.Log($"POP: {QueueLSB.Pop()}");
 
-        QueueLSB.Size();
+        Debug.Log(QueueLSB.Lentgh());
     }
 }
