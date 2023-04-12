@@ -11,6 +11,7 @@ public class ObjectPoolData
     public int BasicSpawnCount;
     public int CurSpawnCount;
     public int CurActiveCount;
+    public int CurDeactiveCount;
 
     public Transform TrParantObj;
     public Transform TrActiveObj;
@@ -29,6 +30,10 @@ public class ObjectPool : MonoBehaviour
     private void Start()
     {
         Initialize();
+
+        GetObj("Circle");
+        GetObj("Circle");
+        GetObj("Circle");
     }
 
     public void Initialize()
@@ -77,17 +82,39 @@ public class ObjectPool : MonoBehaviour
             DeactiveMultiplePool[Key].Push(NewObj);
 
             PoolSpawnData[Key].CurSpawnCount++;
+            PoolSpawnData[Key].CurDeactiveCount++;
         }
 
         ParantNameSet(Key);
     }
 
-    public GameObject GetObj()
+    public GameObject GetObj(string Key)
     {
-        return default(GameObject);
+        GameObject Obj = null;
+
+        if (DeactiveMultiplePool[Key].Lentgh() > 0)
+        {
+            Obj = DeactiveMultiplePool[Key].Pop();
+
+            Obj.SetActive(true);
+            Obj.transform.SetParent(PoolSpawnData[Key].TrActiveObj);
+            ActiveMultiplePool[Key].Push(Obj);
+
+            PoolSpawnData[Key].CurActiveCount++;
+            PoolSpawnData[Key].CurDeactiveCount--;
+        }
+
+        else
+        {
+            CreateNewObj(Key, 1);
+
+
+        }
+
+        return Obj;
     }
 
-    public void ReturnObj(GameObject Obj)
+    public void ReturnObj(string Key, GameObject Obj)
     {
 
     }
