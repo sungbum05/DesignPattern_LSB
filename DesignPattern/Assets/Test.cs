@@ -1,9 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Test : MonoBehaviour
+public class Test : Singleton<Test>
 {
     StackLSB<int> Stack = new StackLSB<int>(10);
     QueueLSB<int> QueueLSB = new QueueLSB<int>(10);
