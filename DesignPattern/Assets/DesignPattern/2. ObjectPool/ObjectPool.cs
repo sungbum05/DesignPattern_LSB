@@ -5,14 +5,16 @@ using UnityEngine;
 [System.Serializable]
 public class ObjectPoolData
 {
+    [Header("사전 등록 필요(입력용)")]
     public string Key;
     public GameObject PoolObj;
     public int MaxSpawnCount;
     public int BasicSpawnCount;
+
+    [Header("사전 등록 불필요(체크용)")]
     public int CurSpawnCount;
     public int CurActiveCount;
     public int CurDeactiveCount;
-
     public Transform TrParantObj;
     public Transform TrActiveObj;
     public Transform TrDeactiveObj;
@@ -23,9 +25,8 @@ public class ObjectPool : MonoBehaviour
     [SerializeField]
     private List<ObjectPoolData> PoolDataList = new List<ObjectPoolData>();
 
-    private Dictionary<string, ObjectPoolData> PoolSpawnData = new Dictionary<string, ObjectPoolData>();
-    private Dictionary<string, QueueLSB<GameObject>> ActiveMultiplePool = new Dictionary<string, QueueLSB<GameObject>>();
-    private Dictionary<string, QueueLSB<GameObject>> DeactiveMultiplePool = new Dictionary<string, QueueLSB<GameObject>>();
+    private static Dictionary<string, ObjectPoolData> PoolSpawnData = new Dictionary<string, ObjectPoolData>();
+    private static Dictionary<string, QueueLSB<GameObject>> ObjPool = new Dictionary<string, QueueLSB<GameObject>>();
 
     private void Start()
     {
@@ -34,6 +35,14 @@ public class ObjectPool : MonoBehaviour
         GetObj("Circle");
         GetObj("Circle");
         GetObj("Circle");
+        GetObj("Circle");
+        GetObj("Circle");
+        GetObj("Circle");
+    }
+
+    private void Update()
+    {
+        Debug.Log(ObjPool["Circle"].Lentgh());
     }
 
     public void Initialize()
@@ -50,10 +59,9 @@ public class ObjectPool : MonoBehaviour
     public void NewCategory(string Key, int PoolSize)
     {
         // 오브젝트 풀 딕셔너리 추가
-        QueueLSB<GameObject> ActivePool = new QueueLSB<GameObject>(PoolSize);
-        QueueLSB<GameObject> DeactivePool = new QueueLSB<GameObject>(PoolSize);
-        ActiveMultiplePool.Add(Key, ActivePool);
-        DeactiveMultiplePool.Add(Key, DeactivePool);
+
+        QueueLSB<GameObject> SpawnObjPool = new QueueLSB<GameObject>(PoolSize);
+        ObjPool.Add(Key, SpawnObjPool);
 
         #region 오브젝트 스폰 장소
         //오브젝트 스폰 장소 소환
@@ -79,7 +87,7 @@ public class ObjectPool : MonoBehaviour
 
             NewObj.SetActive(false);
             NewObj.transform.SetParent(PoolSpawnData[Key].TrDeactiveObj);
-            DeactiveMultiplePool[Key].Push(NewObj);
+            ObjPool[Key].Push(NewObj);
 
             PoolSpawnData[Key].CurSpawnCount++;
             PoolSpawnData[Key].CurDeactiveCount++;
@@ -92,31 +100,39 @@ public class ObjectPool : MonoBehaviour
     {
         GameObject Obj = null;
 
-        if (DeactiveMultiplePool[Key].Lentgh() > 0)
+        if (ObjPool[Key].Lentgh() <= 0 && PoolSpawnData[Key].MaxSpawnCount > PoolSpawnData[Key].CurSpawnCount)
         {
-            Obj = DeactiveMultiplePool[Key].Pop();
+            CreateNewObj(Key, 1);
+        }
+
+        if (ObjPool[Key].Lentgh() > 0)
+        {
+            Obj = ObjPool[Key].Pop();
 
             Obj.SetActive(true);
             Obj.transform.SetParent(PoolSpawnData[Key].TrActiveObj);
-            ActiveMultiplePool[Key].Push(Obj);
 
             PoolSpawnData[Key].CurActiveCount++;
             PoolSpawnData[Key].CurDeactiveCount--;
         }
 
-        else
-        {
-            CreateNewObj(Key, 1);
-
-
-        }
-
         return Obj;
     }
 
-    public void ReturnObj(string Key, GameObject Obj)
+    public static void ReturnObj(string Key, GameObject Obj)
     {
+        Obj.SetActive(false);
+        Obj.transform.SetParent(PoolSpawnData[Key].TrDeactiveObj);
+        ObjPool[Key].Push(Obj);
 
+        PoolSpawnData[Key].CurActiveCount--;
+        PoolSpawnData[Key].CurDeactiveCount++;
+    }
+
+    public static void ClearPool()
+    {
+        PoolSpawnData.Clear();
+        ObjPool.Clear();
     }
 
     public void ParantNameSet(string Key)

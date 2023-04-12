@@ -242,14 +242,18 @@ MonoBehaviour:
     BasicSpawnCount: 5
     CurSpawnCount: 0
     CurActiveCount: 0
+    CurDeactiveCount: 0
+    TrParantObj: {fileID: 0}
     TrActiveObj: {fileID: 0}
     TrDeactiveObj: {fileID: 0}
   - Key: Circle
     PoolObj: {fileID: 142870909803229195, guid: 654b731dc67c84144846473614f50fc7, type: 3}
-    MaxSpawnCount: 30
-    BasicSpawnCount: 10
+    MaxSpawnCount: 5
+    BasicSpawnCount: 5
     CurSpawnCount: 0
     CurActiveCount: 0
+    CurDeactiveCount: 0
+    TrParantObj: {fileID: 0}
     TrActiveObj: {fileID: 0}
     TrDeactiveObj: {fileID: 0}
   - Key: Capsule
@@ -258,6 +262,8 @@ MonoBehaviour:
     BasicSpawnCount: 7
     CurSpawnCount: 0
     CurActiveCount: 0
+    CurDeactiveCount: 0
+    TrParantObj: {fileID: 0}
     TrActiveObj: {fileID: 0}
     TrDeactiveObj: {fileID: 0}
 --- !u!4 &615541523
