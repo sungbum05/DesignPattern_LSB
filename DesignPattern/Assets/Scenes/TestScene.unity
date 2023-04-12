@@ -235,7 +235,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d573ae85c70bd14184f83ee91614d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolEnum: 1
+  PoolDataList:
+  - Key: Box
+    PoolObj: {fileID: 1618427938023809569, guid: 51ee528515673974886603028f101595, type: 3}
+    MaxSpawnCount: 50
+    BasicSpawnCount: 5
+    CurSpawnCount: 0
+    CurActiveCount: 0
+    TrActiveObj: {fileID: 0}
+    TrDeactiveObj: {fileID: 0}
+  - Key: Circle
+    PoolObj: {fileID: 142870909803229195, guid: 654b731dc67c84144846473614f50fc7, type: 3}
+    MaxSpawnCount: 30
+    BasicSpawnCount: 10
+    CurSpawnCount: 0
+    CurActiveCount: 0
+    TrActiveObj: {fileID: 0}
+    TrDeactiveObj: {fileID: 0}
+  - Key: Capsule
+    PoolObj: {fileID: 1210430917688495705, guid: c5c637385e8ad044f8c9b7f26da839e8, type: 3}
+    MaxSpawnCount: 10
+    BasicSpawnCount: 7
+    CurSpawnCount: 0
+    CurActiveCount: 0
+    TrActiveObj: {fileID: 0}
+    TrDeactiveObj: {fileID: 0}
 --- !u!4 &615541523
 Transform:
   m_ObjectHideFlags: 0
